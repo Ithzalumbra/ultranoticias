@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Http\Client;
 
 /**
  * Application Controller
@@ -27,7 +28,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
+    private $_currentUser = null;
     /**
      * Initialization hook method.
      *
@@ -37,6 +38,7 @@ class AppController extends Controller
      *
      * @return void
      */
+
     public function initialize()
     {
         parent::initialize();
@@ -44,12 +46,33 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
+        $this->loadComponent('Auth');
+        $this->Auth->allow([
+            'newsletter',
+            'recoverPassword',
+            'sendedMessage',
+            'newPassword',
+            'companyFlyers'
+
+        ]);
         $this->loadComponent('Flash');
+
 
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+    }
+
+
+
+    public function beforeFilter(Event $event){
+        if($this->Auth->user() != null){
+            $this->set('currentUser', $this->Auth->user());
+        }
+        else{
+            $this->set('currentUser', null);
+        }
     }
 }

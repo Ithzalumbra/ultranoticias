@@ -46,17 +46,25 @@ class CommentsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $comment = $this->Comments->newEntity();
+    public function add(){
         if ($this->request->is('post')) {
-            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            if ($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
+            $data = $this->request->data;
+            $api = ['message' => $data['message'],
+                'id_user_comment' => $data['id_user_comment'],
+                'id_news' => $data['id_news']
+            ];
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
+            $http = new Client(['headers' => [
+                'Content-Type' => 'application/json']
+            ]);
+            $response = $http->post(
+                'http://127.0.0.1:8000/api/v1/comments/',
+                json_encode($api),
+                ['type' => 'json']
+            );
+            $response = json_decode($response->body(), true);
+            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
+            $this->Flash->success(__('The comment has been saved.'));
         }
         $this->set(compact('comment'));
     }
@@ -70,19 +78,7 @@ class CommentsController extends AppController
      */
     public function edit($id = null)
     {
-        $comment = $this->Comments->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            if ($this->Comments->save($comment)) {
-                $this->Flash->success(__('The comment has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The comment could not be saved. Please, try again.'));
-        }
-        $this->set(compact('comment'));
     }
 
     /**
@@ -94,14 +90,6 @@ class CommentsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $comment = $this->Comments->get($id);
-        if ($this->Comments->delete($comment)) {
-            $this->Flash->success(__('The comment has been deleted.'));
-        } else {
-            $this->Flash->error(__('The comment could not be deleted. Please, try again.'));
-        }
 
-        return $this->redirect(['action' => 'index']);
     }
 }

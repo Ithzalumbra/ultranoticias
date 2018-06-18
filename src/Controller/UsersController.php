@@ -2,6 +2,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
+use Cake\Http\Client;
+use Illuminate\Contracts\Hashing\Hasher;
+
 
 /**
  * Users Controller
@@ -18,11 +22,14 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
+    public function initialize()
+    {
+        parent::initialize();
+    }
+
+
     public function index()
     {
-        $users = $this->paginate($this->Users);
-
-        $this->set(compact('users'));
     }
 
     /**
@@ -34,11 +41,6 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('user', $user);
     }
 
     /**
@@ -48,17 +50,25 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $data = $this->request->data;
+            $api = ['Nombre' => $data['Nombre'],
+                'Apellido' => $data['Apellido'],
+                'password' => $data['password'],
+                'Correo' => $data['Correo'],
+                'Telefono' => $data['Telefono'],
+                'id_type_user' => $data['id_type_user']];
+            $http = new Client(['headers' => [
+                'Content-Type' => 'application/json']
+            ]);
+            $response = $http->post(
+                'http://127.0.0.1:8000/api/v1/comments/',
+                json_encode($api),
+                ['type' => 'json']
+            );
+            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
+            $this->Flash->success(__('The comment has been saved.'));
         }
-        $this->set(compact('user'));
     }
 
     /**
@@ -70,19 +80,6 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
-        }
-        $this->set(compact('user'));
     }
 
     /**
@@ -94,14 +91,34 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
+    }
 
-        return $this->redirect(['action' => 'index']);
+    public function login(){
+        if($this->request->is('post')){
+            $data = $this->request->data;
+            $http = new Client(['headers' => [
+                'Content-Type' => 'application/json']
+            ]);
+            $api = ['email' => $data['email'], 'password' => $data['password']];
+
+            $response = $http->post(
+                'http://127.0.0.1:8000/api/v1/login/',
+                json_encode($api),
+                ['type' => 'json']
+            );
+            $response = json_decode($response->body(), true);
+            /*pr($response['data']);
+            $user = $this->Users->newEntity();
+            $user = $this->Users->patchEntities($user, $response['data']);
+            die;
+            pr($user);*/
+            $this->Auth->setUser($response['data']);
+            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
+        }
+    }
+
+    public function logout(){
+        $this->Auth->logout();
+        $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
     }
 }
