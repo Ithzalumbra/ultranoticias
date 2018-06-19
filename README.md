@@ -12,7 +12,9 @@ Quinto en la carpeta del proyecto (c:/wamp/www/ultranoticias-master) hacen click
 
 despues escriben "composer install"
 
-Sexto ta lista la wea
-
+Sexto en la consola del GIT bash ponen 
 
 bin/cake server -p 8765
+
+Septimo ta lista la wea
+
