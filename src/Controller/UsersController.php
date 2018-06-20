@@ -6,7 +6,6 @@ use Cake\Auth\DefaultPasswordHasher;
 use Cake\Http\Client;
 use Illuminate\Contracts\Hashing\Hasher;
 
-
 /**
  * Users Controller
  *
@@ -57,13 +56,14 @@ class UsersController extends AppController
                 'password' => $data['password'],
                 'Correo' => $data['Correo'],
                 'Telefono' => $data['Telefono'],
-                 'id_type_user' =>'3'];
+                'id_type_user' =>'3'];
             $http = new Client(['headers' => [
                 'Content-Type' => 'application/json']
             ]);
+            $data_api = json_encode($api);
             $response = $http->post(
-                'http://127.0.0.1:8000/api/v1/comments/',
-                json_encode($api),
+                'http://127.0.0.1:8000/api/v1/users/',
+                 $data_api,
                 ['type' => 'json']
             );
             $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
