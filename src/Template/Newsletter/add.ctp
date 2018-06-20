@@ -4,25 +4,34 @@
  * @var \App\Model\Entity\Newsletter $newsletter
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Newsletter'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
+
+
+
 <div class="newsletter form large-9 medium-8 columns content">
-    <?= $this->Form->create($newsletter) ?>
+    <?= $this->Form->create('') ?>
     <fieldset>
-        <legend><?= __('Add Newsletter') ?></legend>
+    <div class="container">
+        <div class="row justify-content-center" style="margin-bottom: 5%;">
+            <div class="col-md-7">
+                <div class="login">
+                    <h3 class="mb-4">Crear Noticia</h3>
+                    <?=$this->Form->create()?>
+
         <?php
-            echo $this->Form->control('title');
-            echo $this->Form->control('short_description');
-            echo $this->Form->control('main_content');
-            echo $this->Form->control('autor');
-            echo $this->Form->control('imagen');
-            echo $this->Form->control('published_on');
+            echo $this->Form->control('title' , ['class' => 'form-control']);
+            echo $this->Form->control('short_description' , ['class' => 'form-control', 'type' => 'textarea']);
+            echo $this->Form->control('main_content' , ['class' => 'form-control', 'type' => 'textarea'] );
+            echo $this->Form->control('imagen' , ['class' => 'form-control'] );
         ?>
+
+     <?= $this->Form->button(__('Crear', ['class' => 'btn'] )) ?>
+            <?= $this->Form->end() ?>
+
+                    <?=$this->Form->end();?>
+                </div>
+            </div>
+        </div>
+        
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+  
 </div>
