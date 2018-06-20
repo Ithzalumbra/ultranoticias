@@ -4,58 +4,38 @@
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
-<br>
-<style>
-    table.greyGridTable {
-        border: 2px solid #FFFFFF;
-        width: 100%;
-        text-align: center;
-        border-collapse: collapse;
-    }
-    table.greyGridTable td, table.greyGridTable th {
-        border: 1px solid #FFFFFF;
-        padding: 3px 4px;
-    }
-    table.greyGridTable tbody td {
-        font-size: 13px;
-    }
-    table.greyGridTable td:nth-child(even) {
-        background: #EBEBEB;
-    }
-    table.greyGridTable thead {
-        background: #FFFFFF;
-        border-bottom: 4px solid #333333;
-    }
-    table.greyGridTable thead th {
-        font-size: 15px;
-        font-weight: bold;
-        color: #333333;
-        text-align: center;
-        border-left: 2px solid #333333;
-    }
-    table.greyGridTable thead th:first-child {
-        border-left: none;
-    }
 
-    table.greyGridTable tfoot {
-        font-size: 14px;
-        font-weight: bold;
-        color: #333333;
-        border-top: 4px solid #333333;
-    }
-    table.greyGridTable tfoot td {
-        font-size: 14px;
-    }
+<style>
+
+body{
+margin:0;
+padding:0;
+}
+a{
+color: #323234;
+}
+
+a:hover{
+text-decoration:none;
+color:#daa520;
+
+
+}
+
 </style>
 
 <div class="users index large-9 medium-8 columns content">
     <div class="row justify-content-center" style="margin-bottom: 5%;">
         <div class="col-md-7">
-            <div class="login">
+            <div>
                 <h3><?= __('Usuarios') ?></h3>
+<<<<<<< HEAD
                 <?=$this->Flash->render();?>
                 <?= $this->Html->link(__('Agregar Usuario'), ['action' => 'add']) ?>
                 <table cellpadding="0" cellspacing="0" class="greyGridTable">
+=======
+                <table cellpadding="0" cellspacing="0" class="table table-hover table-bordered">
+>>>>>>> b320bfa5cf52ad5d690218834f8404a41bd68540
                     <thead>
                     <tr>
                         <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -89,8 +69,8 @@
                                         break;
                                 } ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id]) ?>
-                                <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $user->id], ['confirm' => __('Estas seguro que quieres borrar a este usuario?.', $user->id)]) ?>
+                                <?= $this->Html->link(__('Editar'), ['action' => 'edit', $user->id], [ 'class' => 'btn btn-secondary mb-2']) ?>
+                                <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $user->id],[ 'class' => 'btn btn-secondary mt-2'], ['confirm' => __('Estas seguro que quieres borrar a este usuario?.', $user->id)]) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
