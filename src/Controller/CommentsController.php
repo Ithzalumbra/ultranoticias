@@ -63,8 +63,9 @@ class CommentsController extends AppController
                 ['type' => 'json']
             );
             $response = json_decode($response->body(), true);
+
 //            pr($response); die;
-            return $this->redirect($this->referer());
+//            return $this->redirect($this->referer());
         }
         $this->set(compact('comment'));
     }

@@ -5,7 +5,7 @@
  */
 ?>
 
-
+<?=$this->Html->script('jquery.min')?>
 <div class="container">
 
     <div class="row">
@@ -31,28 +31,53 @@
 
             </div>
             <h2>Comentarios</h2><br>
-            <?php
-            foreach($comments as $come):
-                foreach($users as $user):
-                    if($come->id_user_comment == $user->id):?>
-                        <b><?=$user->Nombre.' '.$user->Apellido?></b>
-                    <?php endif;
-                endforeach; ?>
-                <p>&nbsp&nbsp&nbsp&nbsp<?=$come->message?></p>
-            <?php
-            endforeach;
-            ?>
+            <div id="comments">
+
+            </div>
             <div>
                 <h3>Comentar</h3>
-                <?=$this->Form->create(null, ['url' => ['controller' => 'comments', 'action' => 'add']]);?>
-                    <?=$this->Form->control('message', ['class' => 'form-control', 'type' => 'textarea']);?>
-                    <?=$this->Form->hidden('id_news', [ 'value' => $newsletter->id]);?>
-                    <?=$this->Form->hidden('id_user_comment', [ 'value' => $currentUser['id']]);?>
+                <?=$this->Form->create(null, ['url' => ['controller' => 'comments', 'action' => 'add'], 'id' => 'comens']);?>
+                <?=$this->Form->control('message', ['class' => 'form-control', 'type' => 'textarea', 'id' => 'msg', 'required' => true]);?>
+                <?=$this->Form->hidden('id_news', [ 'value' => $newsletter->id]);?>
+                <?=$this->Form->hidden('id_user_comment', [ 'value' => $currentUser['id']]);?>
                 <br>
-                    <?=$this->Form->submit('Agregar comentario')?>
+                <?=$this->Form->submit('Agregar comentario')?>
                 <?=$this->Form->end();?>
             </div>
         </div>
 
     </div>
 </div>
+<script>
+    $( document ).ready(function(){
+        reload();
+        $('#comens').on('submit',function (event) {
+            event.preventDefault();
+            var datos = $(this).serializeArray();
+            $.ajax({
+                type:'post',
+                data: datos,
+                url: '/comments/add/',
+                success:function (data) {
+                    reload();
+                    $('#msg').val('');
+                },
+                error:function (e) {
+                    console.log(e);
+                }
+            });
+        })
+    });
+    function reload(){
+        $.ajax({
+            type:"post",
+            url: '/newsletter/ajax/'+<?=$newsletter->id?>,
+            success: function (data) {
+                $('#comments').html(data);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+</script>

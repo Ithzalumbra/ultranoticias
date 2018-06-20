@@ -64,6 +64,25 @@ class NewsletterController extends AppController
         $this->set(compact('newsletter', 'comments', 'users'));
     }
 
+    public function ajax($id){
+        $http = new Client();
+        $response = $http->get('http://127.0.0.1:8000/api/v1/users/', [], ['type' => 'json']);
+        $data = json_decode($response->body());
+        $users = $data->data;
+
+        $this->viewBuilder()->autoLayout(false);
+        $http = new Client();
+        $response = $http->get('http://127.0.0.1:8000/api/v1/comments/', [], ['type' => 'json']);
+        $data = json_decode($response->body());
+        $comments = $data->data;
+        foreach ($comments as $key => $comen){
+            if($comen->id_news != $id){
+                unset($comments[$key]);
+            }
+        }
+        $this->set(compact('comments', 'users'));
+    }
+
     /**
      * Add method
      *
