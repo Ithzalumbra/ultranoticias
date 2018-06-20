@@ -31,7 +31,7 @@ class UsersController extends AppController
     public function index()
     {
         $http = new Client();
-        $response = $http->get('http://larapi.local/public/api/v1/users', [], ['type' => 'json']);
+        $response = $http->get('http://127.0.0.1:8000/api/v1/users/', [], ['type' => 'json']);
         $data = json_decode($response->body());
         $users = $data->data;
         $this->set(compact('users'));
@@ -72,8 +72,8 @@ class UsersController extends AppController
                  $data_api,
                 ['type' => 'json']
             );
-            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
-            $this->Flash->success(__('The comment has been saved.'));
+            $this->redirect(['controller' => 'users', 'action' => 'index']);
+            $this->Flash->success(__('El usuario se ha creado correctamente.'));
         }
     }
 
@@ -98,7 +98,7 @@ class UsersController extends AppController
                 ['type' => 'json']
             );
             $this->redirect(['controller' => 'users', 'action' => 'index']);
-            $this->Flash->success(__('Todo ok.'));
+            $this->Flash->success(__('Se ha registrado correctamente.'));
         }
     }
 
@@ -139,6 +139,7 @@ class UsersController extends AppController
                 json_encode($api),
                 ['type' => 'json']
             );
+            $this->Flash->success(__('El usuario se ha modificado correctamente.'));
             $this->redirect(['action' => 'index']);
         }
         $this->set(compact('user'));
@@ -162,6 +163,7 @@ class UsersController extends AppController
             [],
             ['type' => 'json']
         );
+        $this->Flash->success(__('El usuario se ha borrado correctamente.'));
         $this->redirect(['action' => 'index']);
     }
 
@@ -184,6 +186,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntities($user, $response['data']);
             die;
             pr($user);*/
+            $this->Flash->success(__('El usuario se ha logueado correctamente.'));
             $this->Auth->setUser($response['data']);
             $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
         }
@@ -191,6 +194,7 @@ class UsersController extends AppController
 
     public function logout(){
         $this->Auth->logout();
-        $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
+        $this->Flash->success(__('El usuario ha cerrado sesion correctamente.'));
+        $this->redirect(['controller' => 'users', 'action' => 'login']);
     }
 }

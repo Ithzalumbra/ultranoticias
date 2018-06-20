@@ -53,6 +53,8 @@
         <div class="col-md-7">
             <div class="login">
                 <h3><?= __('Usuarios') ?></h3>
+                <?=$this->Flash->render();?>
+                <?= $this->Html->link(__('Agregar Usuario'), ['action' => 'add']) ?>
                 <table cellpadding="0" cellspacing="0" class="greyGridTable">
                     <thead>
                     <tr>

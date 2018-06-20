@@ -1,12 +1,13 @@
 <section id="cont-login">
     <header class="text-center">
     </header>
-    <?=$this->Flash->render();?>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
                 <div class="login">
                     <h3 class="mb-4">Login</h3>
+                    <?=$this->Flash->render();?>
                     <?=$this->Form->create()?>
                         <div class="form-group">
                             <?=$this->Form->control('email',['class' => 'form-control', 'placeholder' => 'Email', 'id' => 'pass', 'required' => true, 'label' => false, 'type' => 'email'])?>

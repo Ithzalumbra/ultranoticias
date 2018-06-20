@@ -106,9 +106,6 @@
                 </div>
             </div>
                 <?php
-                if($key >= 4){
-                    break;
-                }
                 endif;
             endforeach; ?>
         </div>

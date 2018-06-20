@@ -7,11 +7,10 @@
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend class="justify-content-center"><?= __('Agregar Usuario') ?></legend>
 
         <div class="container">
             <div class="row justify-content-center" style="margin-bottom: 5%;">
-                <div class="col-md-7">
+                <div class="col-md-7"><br>
                     <div class="login">
                         <?php switch (h($user->id_type_user)){
                             case 1:
@@ -24,7 +23,7 @@
                                 $tipo=  'Lector';
                                 break;
                         } ?>
-                        <h3 class="mb-4">Registro</h3>
+                        <h3 class="mb-4">Editar usuario</h3>
                         <?= $this->Form->create() ?>
 
                         <?php

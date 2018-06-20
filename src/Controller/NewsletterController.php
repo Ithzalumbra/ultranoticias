@@ -22,8 +22,9 @@ class NewsletterController extends AppController
 
     public function index()
     {
+//        pr);die;
         $http = new Client();
-        $response = $http->get('http://127.0.0.1:8000/api/v1/news/', [], ['type' => 'json']);
+        $response = $http->get($this->getApiUrl().'/news/', [], ['type' => 'json']);
         $data = json_decode($response->body());
         $news = $data->data;
         $this->set(compact('news'));
@@ -42,8 +43,25 @@ class NewsletterController extends AppController
         $response = $http->get('http://127.0.0.1:8000/api/v1/news/'.$this->request->getParam("id"), [], ['type' => 'json']);
         $data = json_decode($response->body());
         $newsletter = $data->data;
-      //   pr($newsletter); die;
-        $this->set('newsletter', $newsletter);
+
+
+        $http = new Client();
+        $response = $http->get('http://127.0.0.1:8000/api/v1/users/', [], ['type' => 'json']);
+        $data = json_decode($response->body());
+        $users = $data->data;
+
+
+        $http = new Client();
+        $response = $http->get('http://127.0.0.1:8000/api/v1/comments/', [], ['type' => 'json']);
+        $data = json_decode($response->body());
+        $comments = $data->data;
+        foreach ($comments as $key => $comen){
+            if($comen->id_news != $newsletter->id){
+                unset($comments[$key]);
+            }
+        }
+//        pr($comments); die;
+        $this->set(compact('newsletter', 'comments', 'users'));
     }
 
     /**
@@ -113,7 +131,7 @@ class NewsletterController extends AppController
                 ['type' => 'json']
             );
             $response = json_decode($response->body(), true);
-            pr($response); die;
+//            pr($response); die;
             $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
         }
         $this->set(compact('newsletter'));

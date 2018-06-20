@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Http\Client;
 
 /**
  * Comments Controller
@@ -53,7 +54,6 @@ class CommentsController extends AppController
                 'id_user_comment' => $data['id_user_comment'],
                 'id_news' => $data['id_news']
             ];
-
             $http = new Client(['headers' => [
                 'Content-Type' => 'application/json']
             ]);
@@ -63,8 +63,8 @@ class CommentsController extends AppController
                 ['type' => 'json']
             );
             $response = json_decode($response->body(), true);
-            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
-            $this->Flash->success(__('The comment has been saved.'));
+//            pr($response); die;
+            return $this->redirect($this->referer());
         }
         $this->set(compact('comment'));
     }

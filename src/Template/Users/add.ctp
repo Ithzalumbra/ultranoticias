@@ -10,7 +10,6 @@
   <div class="container">
         <div class="row justify-content-center" style="margin-bottom: 5%;">
             <div class="col-md-7">
-                <?= $this->Html->link(__('Agregar usuario'), ['controller' => 'users',  'action' => 'add']) ?>
                 <div class="login">
                     <h3 class="mb-4">Agregar usuario</h3>
                     <?=$this->Form->create()?>

@@ -29,6 +29,7 @@ use Cake\Http\Client;
 class AppController extends Controller
 {
     private $_currentUser = null;
+    private $_apiUrl = null;
     /**
      * Initialization hook method.
      *
@@ -57,7 +58,7 @@ class AppController extends Controller
         ]);
         $this->loadComponent('Flash');
 
-
+        $this->_apiUrl = "http://127.0.0.1:8000/api/v1";
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
@@ -74,5 +75,9 @@ class AppController extends Controller
         else{
             $this->set('currentUser', null);
         }
+    }
+
+    public function getApiUrl(){
+        return $this->_apiUrl;
     }
 }

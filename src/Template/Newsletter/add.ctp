@@ -12,7 +12,7 @@
     <fieldset>
     <div class="container">
         <div class="row justify-content-center" style="margin-bottom: 5%;">
-            <div class="col-md-7">
+            <div class="col-md-7"><br>
                 <div class="login">
                     <h3 class="mb-4">Crear Noticia</h3>
                     <?=$this->Form->create()?>
