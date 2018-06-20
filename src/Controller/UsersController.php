@@ -57,7 +57,7 @@ class UsersController extends AppController
                 'password' => $data['password'],
                 'Correo' => $data['Correo'],
                 'Telefono' => $data['Telefono'],
-                'id_type_user' => $data['id_type_user']];
+                 'id_type_user' =>'3'];
             $http = new Client(['headers' => [
                 'Content-Type' => 'application/json']
             ]);
