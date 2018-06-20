@@ -42,7 +42,7 @@ class NewsletterController extends AppController
         $response = $http->get('http://127.0.0.1:8000/api/v1/news/'.$this->request->getParam("id"), [], ['type' => 'json']);
         $data = json_decode($response->body());
         $newsletter = $data->data;
-        pr($newsletter); die;
+      //   pr($newsletter); die;
         $this->set('newsletter', $newsletter);
     }
 
@@ -62,10 +62,10 @@ class NewsletterController extends AppController
             ]);
             $api = ['title' => $data['title'],
                 'short_description' => $data['short_description'],
-                'published_on' => $data['published_on'],
                 'main_content' => $data['main_content'],
-                'autor' => $data['autor']];
-
+                'imagen' => $data['imagen'],
+                'autor' =>  $this->Auth->user()['id'] ];
+            //     pr(json_encode($api)); die;
             $response = $http->post(
                 'http://127.0.0.1:8000/api/v1/news/',
                 json_encode($api),
