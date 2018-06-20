@@ -73,7 +73,6 @@ class NewsletterController extends AppController
             );
             $response = json_decode($response->body(), true);
             $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
-            $this->set(compact('newsletter'));
         }
     }
 
@@ -84,22 +83,41 @@ class NewsletterController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-//    public function edit($id = null)
-//    {
-//        $newsletter = $this->Newsletter->get($id, [
-//            'contain' => []
-//        ]);
-//        if ($this->request->is(['patch', 'post', 'put'])) {
+    public function edit($id = null)
+    {
+        $http = new Client(['headers' => [
+            'Content-Type' => 'application/json']
+        ]);
+        $response = $http->get(
+            'http://127.0.0.1:8000/api/v1/news/'.$id,
+            [],
+            ['type' => 'json']
+        );
+        $newsletter = $response->body();
+        $newsletter = json_decode($newsletter)->data;
+        if($this->request->is('post')){
 //            $newsletter = $this->Newsletter->patchEntity($newsletter, $this->request->getData());
-//            if ($this->Newsletter->save($newsletter)) {
-//                $this->Flash->success(__('The newsletter has been saved.'));
-//
-//                return $this->redirect(['action' => 'index']);
-//            }
-//            $this->Flash->error(__('The newsletter could not be saved. Please, try again.'));
-//        }
-//        $this->set(compact('newsletter'));
-//    }
+            $data = $this->request->data;
+            $http = new Client(['headers' => [
+                'Content-Type' => 'application/json']
+            ]);
+            $api = ['title' => $data['title'],
+                'short_description' => $data['short_description'],
+                'main_content' => $data['main_content'],
+                'imagen' => $data['imagen'],
+                'autor' =>  $this->Auth->user()['id'] ];
+            //     pr(json_encode($api)); die;
+            $response = $http->put(
+                'http://127.0.0.1:8000/api/v1/news/'.$id,
+                json_encode($api),
+                ['type' => 'json']
+            );
+            $response = json_decode($response->body(), true);
+            pr($response); die;
+            $this->redirect(['controller' => 'newsletter', 'action' => 'index']);
+        }
+        $this->set(compact('newsletter'));
+    }
 
     /**
      * Delete method

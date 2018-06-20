@@ -24,6 +24,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
+        $this->Auth->allow(['register', 'login']);
     }
 
 
@@ -54,7 +55,6 @@ class UsersController extends AppController
      */
     public function add()
     {
-        pr($this->Auth->user()['id']); die;
         if ($this->request->is('post')) {
             $data = $this->request->data;
             $api = ['Nombre' => $data['Nombre'],
@@ -87,7 +87,7 @@ class UsersController extends AppController
                 'password' => $data['password'],
                 'Correo' => $data['Correo'],
                 'Telefono' => $data['Telefono'],
-                'id_type_user' => ($data['tipo_id'] + 1) ];
+                'id_type_user' => 3 ];
             $http = new Client(['headers' => [
                 'Content-Type' => 'application/json']
             ]);
@@ -98,7 +98,7 @@ class UsersController extends AppController
                 ['type' => 'json']
             );
             $this->redirect(['controller' => 'users', 'action' => 'index']);
-            $this->Flash->success(__('The comment has been saved.'));
+            $this->Flash->success(__('Todo ok.'));
         }
     }
 

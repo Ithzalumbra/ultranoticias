@@ -26,8 +26,6 @@
 
      <?= $this->Form->button(__('Crear', ['class' => 'btn'] )) ?>
             <?= $this->Form->end() ?>
-
-                    <?=$this->Form->end();?>
                 </div>
             </div>
         </div>

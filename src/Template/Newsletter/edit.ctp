@@ -8,7 +8,7 @@
 
 
 <div class="newsletter form large-9 medium-8 columns content">
-    <?= $this->Form->create('') ?>
+    <?= $this->Form->create($newsletter) ?>
     <fieldset>
     <div class="container">
         <div class="row justify-content-center" style="margin-bottom: 5%;">
@@ -18,16 +18,14 @@
                     <?=$this->Form->create()?>
 
         <?php
-            echo $this->Form->control('title' , ['class' => 'form-control']);
-            echo $this->Form->control('short_description' , ['class' => 'form-control', 'type' => 'textarea']);
-            echo $this->Form->control('main_content' , ['class' => 'form-control', 'type' => 'textarea'] );
-            echo $this->Form->control('imagen' , ['class' => 'form-control'] );
+            echo $this->Form->control('title' , ['class' => 'form-control', 'value' => $newsletter->title]);
+            echo $this->Form->control('short_description' , ['class' => 'form-control', 'type' => 'textarea', 'value' => $newsletter->short_description]);
+            echo $this->Form->control('main_content' , ['class' => 'form-control', 'type' => 'textarea', 'value' => $newsletter->main_content] );
+            echo $this->Form->control('imagen' , ['class' => 'form-control', 'value' => $newsletter->imagen] );
         ?>
 
-     <?= $this->Form->button(__('Crear', ['class' => 'btn'] )) ?>
+     <?= $this->Form->button(__('Guardar', ['class' => 'btn'] )) ?>
             <?= $this->Form->end() ?>
-
-                    <?=$this->Form->end();?>
                 </div>
             </div>
         </div>

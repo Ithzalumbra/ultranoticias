@@ -7,8 +7,12 @@
 
 
      <div class="container">
+
             <div class="row"> 
                    <div class="jumbotron">
+                       <?php if($currentUser['id_type_user'] == 1 || $currentUser['id_type_user'] == 2) {
+                           echo $this->Html->link(__('Editar'), ['action' => 'edit', $newsletter->id]);
+                       } ?>
                         <div class="header-title">
                                     <h3> <?= h($newsletter->title) ?> </h3>                   
                         </div>
