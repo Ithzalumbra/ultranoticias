@@ -29,13 +29,10 @@ color:#daa520;
         <div class="col-md-7">
             <div>
                 <h3><?= __('Usuarios') ?></h3>
-<<<<<<< HEAD
                 <?=$this->Flash->render();?>
                 <?= $this->Html->link(__('Agregar Usuario'), ['action' => 'add']) ?>
                 <table cellpadding="0" cellspacing="0" class="greyGridTable">
-=======
                 <table cellpadding="0" cellspacing="0" class="table table-hover table-bordered">
->>>>>>> b320bfa5cf52ad5d690218834f8404a41bd68540
                     <thead>
                     <tr>
                         <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -43,8 +40,7 @@ color:#daa520;
                         <th scope="col"><?= $this->Paginator->sort('Apellido') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('Correo') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('Telefono') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('password') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('id_type_user') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('Tipo usuario') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                     </thead>
@@ -56,7 +52,6 @@ color:#daa520;
                             <td><?= h($user->Apellido) ?></td>
                             <td><?= h($user->Correo) ?></td>
                             <td><?= h($user->Telefono) ?></td>
-                            <td><?= h($user->password) ?></td>
                             <td><?php switch (h($user->id_type_user)){
                                     case 1:
                                         echo 'Administrador';
