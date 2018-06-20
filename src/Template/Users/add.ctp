@@ -11,7 +11,7 @@
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
+    <?= $this->Form->create('') ?>
     <fieldset>
         <legend><?= __('Add User') ?></legend>
        
@@ -29,10 +29,9 @@
             echo $this->Form->control('Telefono' , ['class' => 'form-control'] );
             echo $this->Form->control('password' , ['class' => 'form-control'] );
             echo $this->Form->control('Usuario' , ['class' => 'form-control', 'readonly' => 'readonly', 'value' => 'Lector' ] );
-                  
-                  ?>
+            ?>
 
-            <?= $this->Form->button(__('submit', ['class' => 'btn'] )) ?>
+            <?= $this->Form->button(__('Guardar', ['class' => 'btn'] )) ?>
             <?= $this->Form->end() ?>
 
                     <?=$this->Form->end();?>
